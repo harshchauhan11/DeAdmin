@@ -1,0 +1,62 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Add Retailer / Deliverer</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <!-- <div [formGroup]="createRetailer"> -->
+  <form [formGroup]="createRetailer" (submit)="createUser()" novalidate>
+    <ion-item>
+      <ion-label stacked>Retailer Type</ion-label>
+      <ion-select formControlName="userType" placeholder="Select User Type">
+          <ion-option value="3">Retailer</ion-option>
+          <ion-option value="4">Deliverer</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Username</ion-label>
+      <ion-input formControlName="uname" type="text" 
+        placeholder="What will user's identity?">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Password</ion-label>
+      <ion-input formControlName="passwd" type="password" 
+        placeholder="What will user's secret?">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Email</ion-label>
+      <ion-input formControlName="email" type="email" 
+        placeholder="What is user's email?">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>First Name</ion-label>
+      <ion-input formControlName="fname" type="text" 
+        placeholder="What is user's firstname?">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Last Name</ion-label>
+      <ion-input formControlName="lname" type="text" 
+        placeholder="What is user's lastname?">
+      </ion-input>
+    </ion-item>
+
+    <br/>
+    <button ion-button full color="deBlue" type="submit" [disabled]="!createRetailer.valid">
+      Add USER
+    </button>
+  </form>
+  <!-- </div> -->
+
+</ion-content>
