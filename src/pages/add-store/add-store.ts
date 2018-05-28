@@ -68,7 +68,8 @@ export class AddStorePage {
   
     fileTransfer.upload(this.imageURI, apiCalls.addPhotoAPI, options)
       .then((data) => {
-      console.log(data+" Uploaded Successfully");
+        console.log(JSON.stringify(data));
+      console.log("Uploaded Successfully");
       this.imageFileName = apiCalls.PhotosURI + "/am.jpg"
       loader.dismiss();
       this.presentToast("Image uploaded successfully");
