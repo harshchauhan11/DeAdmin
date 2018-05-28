@@ -1,9 +1,9 @@
 "use strict";
 // import { HttpHeaders } from "@angular/common/http";
 
-// export const origin: string = "http://13.127.199.206";              // AWS
+export const origin: string = "http://13.127.199.206";              // AWS
 // export const origin: string = "http://localhost";                      // Local
-export const origin: string = "http://127.0.0.1:81";                      // Local
+// export const origin: string = "http://127.0.0.1:81";                      // Local
 
 export const baseURL: string = origin + "/";
 export const apiVersion: string = "DeAdminPHP";                          // AWS
@@ -35,3 +35,5 @@ export const VENDOR_PROFILE: string = "store_profile.php";
 
 // Admin Level APIs
 export const ADD_RETAILER_DELIVERER: string = "add_user_admin.php";
+export const ADD_PHOTO: string = "upload.php";
+export const PHOTO_CONST: string = "uploads";
