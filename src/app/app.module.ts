@@ -23,6 +23,8 @@ import {
 import { File } from "@ionic-native/file";
 import { Camera } from "@ionic-native/camera";
 import { AddStorePage } from "../pages/add-store/add-store";
+import { Geolocation } from '@ionic-native/geolocation';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { AddStorePage } from "../pages/add-store/add-store";
     // FileUploadOptions,
     // FileTransferObject,
     File,
-    Camera
+    Camera,
+    Geolocation,
+    LocationAccuracy
   ]
 })
 export class AppModule {}

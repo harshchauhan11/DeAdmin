@@ -8,15 +8,68 @@
 
 
 <ion-content padding>
-  <ion-item>
-    <p>{{imageURI}}</p>
-    <button ion-button color="secondary" (click)="getImage()">Get Image</button>
-  </ion-item>
-  <ion-item>
-    <h4>Image Preview</h4>
-    <img src="{{imageFileName}}" *ngIf="imageFileName" alt="Ionic File" width="300" />
-  </ion-item>
-  <ion-item>
-    <button ion-button (click)="uploadFile()">Upload</button>
-  </ion-item>
+  <form [formGroup]="createStoreForm" (submit)="createStore()" novalidate>
+    <div class="item item-input">
+      <ion-label stacked>Retailer Type</ion-label>
+      <ion-select formControlName="retailerType" placeholder="Select Retailer Type">
+        <ion-option value="1">Vendor</ion-option>
+        <ion-option value="2">Peddler</ion-option>
+      </ion-select>
+    </div>
+
+    <div class="item item-input">
+      <ion-label stacked>Store Name</ion-label>
+      <ion-input [(ngModel)]="storeName" (change)="setImageName()" formControlName="storeName" type="text" placeholder="What is store's name?">
+      </ion-input>
+    </div>
+
+    <div class="item item-input">
+      <ion-label stacked>Password</ion-label>
+      <ion-input formControlName="passwd" type="password" placeholder="What will user's secret?">
+      </ion-input>
+    </div>
+
+    <div class="item item-input">
+      <ion-label stacked>Email</ion-label>
+      <ion-input formControlName="email" type="email" placeholder="What is user's email?">
+      </ion-input>
+    </div>
+
+    <div class="item item-input">
+      <ion-label stacked>First Name</ion-label>
+      <ion-input formControlName="fname" type="text" placeholder="What is user's firstname?">
+      </ion-input>
+    </div>
+
+    <div class="item item-input">
+      <ion-label stacked>Last Name</ion-label>
+      <ion-input formControlName="lname" type="text" placeholder="What is user's lastname?">
+      </ion-input>
+    </div>
+
+    <div class="item item-input">
+        <ion-label stacked>Store Photo</ion-label>
+        <button ion-button small color="deBlue" (click)="getImage()" [disabled]="!createStoreForm.valid">Capture/Browse Photo</button>
+        <button ion-button small color="deBlue" (click)="uploadFile()" [disabled]="!createStoreForm.valid">Upload</button>
+        <br/>
+        <img src="{{imageURI}}" *ngIf="imageURI" alt="Ionic File" height="200" />
+
+        <ion-input [(ngModel)]="imageFilePathRemote" formControlName="storePhoto" type="text" placeholder="This will be filled automatically." disabled>
+        </ion-input>
+    </div>
+
+    <div class="item item-input">
+      <ion-label stacked>Store Location</ion-label>
+      <a ion-button small color="deRed" (click)="getCurrentLocation($event)">DETECT LOCATION</a>
+      <br/>
+
+      <ion-input [(ngModel)]="storeLocation" formControlName="latLng" type="text" placeholder="This will be filled automatically." disabled>
+      </ion-input>
+  </div>
+
+    <br/>
+    <button ion-button full color="deBlue" type="submit" [disabled]="!createStoreForm.valid">
+      Add STORE
+    </button>
+  </form>
 </ion-content>
