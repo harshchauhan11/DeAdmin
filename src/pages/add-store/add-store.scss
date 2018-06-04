@@ -1,3 +1,21 @@
 page-add-store {
-
+  .no-bg {
+    background: none !important;
+  }
+  .retailerList {
+    // position: absolute;
+    // width: 97%;
+  }
+  .retailerList .item-md {
+    background-color: #aaa;
+  }
+  .retailerList .label-md {
+    color: #000;
+    font-weight: bold;
+    font-size: 12px;
+  }
+  .list-md .item-block .item-inner {
+    border-bottom: 1px solid #666;
+    margin-right: 10px;
+  }
 }

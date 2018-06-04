@@ -15,9 +15,17 @@ import {
 // import { FilePath } from "@ionic-native/file-path";
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import * as apiCalls from "../../providers/api-service/api-calls";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl
+} from "@angular/forms";
 import { Geolocation } from "@ionic-native/geolocation";
 import { LocationAccuracy } from "@ionic-native/location-accuracy";
+import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
+import { Retailer } from "../../models/Retailer";
+import "rxjs/add/operator/debounceTime";
 
 @IonicPage()
 @Component({
@@ -26,11 +34,17 @@ import { LocationAccuracy } from "@ionic-native/location-accuracy";
 })
 export class AddStorePage {
   public createStoreForm: FormGroup;
+  responseData: any;
   imageURI: any;
   imageFileName: any;
   imageFilePathRemote = "";
   storeName: any;
   storeLocation: any;
+  private retailers: Retailer[] = [];
+  items: any;
+  searchTerm: string = "";
+  searchControl: FormControl;
+  listShow = false;
 
   constructor(
     public navCtrl: NavController,
@@ -44,22 +58,33 @@ export class AddStorePage {
     public toastCtrl: ToastController,
     public platform: Platform,
     private geolocation: Geolocation,
-    private locationAccuracy: LocationAccuracy
+    private locationAccuracy: LocationAccuracy,
+    private authService: AuthServiceProvider
   ) {
     this.createStoreForm = formBuilder.group({
+      retailerName: ["", Validators.required],
       retailerType: ["", Validators.required],
       storeName: ["", Validators.required],
       passwd: ["", Validators.required],
       email: ["", Validators.required],
       fname: ["", Validators.required],
       lname: ["", Validators.required],
-      storePhoto: [""],
-      latLng: [""]
+      storePhoto: ["", Validators.required],
+      latLng: ["", Validators.required],
+      searchControl: [""]
     });
+    this.searchControl = new FormControl();
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad AddStorePage");
+    this.getRetailers();
+    this.setFilteredItems();
+
+    this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
+      this.setFilteredItems();
+    });
+
     if (this.storeName != null) {
       console.log(
         this.storeName.toLowerCase().replace(/ /g, "_") + new Date().getTime()
@@ -87,8 +112,8 @@ export class AddStorePage {
 
   getCurrentLocation(event: Event) {
     event.stopPropagation();
-    this.enableLocation();
-    
+    // this.enableLocation();
+
     this.geolocation
       .getCurrentPosition()
       .then(resp => {
@@ -100,6 +125,33 @@ export class AddStorePage {
       .catch(error => {
         console.log("Error getting location", error);
       });
+  }
+
+  getRetailers() {
+    this.authService.getRetailers().then(res => {
+      this.responseData = res;
+      console.log(JSON.stringify(this.responseData.body));
+      this.retailers = JSON.parse(JSON.stringify(this.responseData.body));
+    });
+  }
+
+  setFilteredItems() {
+    this.items = this.filterItems(this.searchTerm);
+  }
+
+  filterItems(searchTerm) {
+    if(this.searchTerm.length <= 0)
+      this.listShow = false;
+    console.log(this.searchTerm.length);
+    console.log("in filterItems: ", this.searchTerm);
+    return this.retailers.filter(item => {
+      return item.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+    });
+  }
+
+  selectRetailer(user) {
+    this.searchTerm = user.name;
+    this.listShow = false;
   }
 
   setImageName() {
@@ -222,6 +274,21 @@ export class AddStorePage {
   //     this.presentToast('Error while selecting image.');
   //   });
   // }
+
+  createStore() {
+    // this.presentToast("Creating User ..");
+    // console.log(this.createRetailer.value.userType);
+    this.authService
+      .addRetailerDeliverer(this.createStoreForm.value)
+      .then(result => {
+        console.log(result);
+        this.responseData = result;
+        // if (this.responseData.status) {
+        //   this.createStoreForm.reset();
+        //   this.presentToast("Store Created Successfully !");
+        // }
+      });
+  }
 
   presentToast(msg) {
     let toast = this.toastCtrl.create({

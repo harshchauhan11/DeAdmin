@@ -8,6 +8,8 @@ export const getVendorProfileApi = constants.API_BASE_URL + constants.SLASH + co
 
 // Admin Level APIs
 export const addRetailerDelivererAPI = constants.API_BASE_URL + constants.SLASH + constants.ADD_RETAILER_DELIVERER;
+export const addStoreAPI = constants.API_BASE_URL + constants.SLASH + constants.ADD_STORE;
 export const addPhotoAPI = constants.API_BASE_URL + constants.SLASH + constants.ADD_PHOTO;
+export const getRetailersAPI = constants.API_BASE_URL + constants.SLASH + constants.GET_RETAILERS;
 export const PhotosURI = constants.API_BASE_URL + constants.SLASH + constants.PHOTO_CONST;
 

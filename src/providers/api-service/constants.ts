@@ -35,5 +35,7 @@ export const VENDOR_PROFILE: string = "store_profile.php";
 
 // Admin Level APIs
 export const ADD_RETAILER_DELIVERER: string = "add_user_admin.php";
+export const ADD_STORE: string = "add_store_admin.php";
+export const GET_RETAILERS: string = "retailers.php";
 export const ADD_PHOTO: string = "upload.php";
 export const PHOTO_CONST: string = "uploads";
