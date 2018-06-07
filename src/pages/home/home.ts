@@ -16,7 +16,7 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad Homepage");
-    // this.enableLocation();
+    this.enableLocation();
   }
 
   enableLocation() {

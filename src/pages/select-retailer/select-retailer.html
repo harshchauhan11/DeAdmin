@@ -1,0 +1,32 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Select Retailer</ion-title>
+    <ion-buttons left>
+      <button ion-button (click)="close()">Cancel</button>
+    </ion-buttons>
+    <!-- <ion-buttons right>
+      <button [disabled]="saveDisabled" ion-button (click)="save()">Save</button>
+    </ion-buttons> -->
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="filterItems(); this.listShow = true;"></ion-searchbar>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div class="item item-input">
+    <!-- <ion-label stacked>Retailer Name</ion-label> -->
+    
+
+    <ion-list *ngIf="listShow" class="retailerList">
+      <ion-item *ngFor="let user of items" (click)="selectRetailer(user)">{{user.name}}
+        <br/>
+        <small>{{user.rid}}</small>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

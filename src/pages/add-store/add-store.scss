@@ -18,4 +18,17 @@ page-add-store {
     border-bottom: 1px solid #666;
     margin-right: 10px;
   }
+
+  .list .item-radio .item-content {
+    background-color: black;
+    color: white;
+  }
+  .list .item-radio .radio-icon {
+    background-color: black;
+    color: white;
+  }
+  .item-radio input:checked + .radio-content .item-content {
+      /* style the item content when its checked */
+      background: black; 
+  }
 }

@@ -9,7 +9,7 @@
 
 <ion-content padding>
 
-    <div class="item item-input">
+  <!-- <div class="item item-input">
         <ion-label stacked>Retailer Name</ion-label>
         <ion-toolbar>
           <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="filterItems(); this.listShow = true;"></ion-searchbar>
@@ -18,26 +18,43 @@
         <ion-list *ngIf="listShow" class="retailerList">
           <ion-item *ngFor="let user of items" (click)="selectRetailer(user)">{{user.name}}<br/><small>{{user.rid}}</small></ion-item>
         </ion-list>
-      </div>
+      </div> -->
 
   <form [formGroup]="createStoreForm" (submit)="createStore()" novalidate>
 
-      <div class="item item-input">
-          <ion-label stacked>Retailer Type</ion-label>
-          <select formControlName="retailerName" placeholder="Select Retailer">
-            <option value="1">{{user.name}}</option>
-          </select>
-        </div>
+    <div class="item item-input">
+      <ion-label stacked>Retailer Name: {{user.rid}}:{{user.name}}</ion-label>
+      <a ion-button small color="deRed" (click)="retailerModal()">CHOOSE RETAILER</a>
+      <input type="hidden" formControlName="retailerId" value={{user.rid}}>
+      <!-- <button ion-button (click)="retailerModal()">CHOOSE RETAILER</button> -->
+    </div>
 
-    <!-- <div class="item item-input"> -->
+    <div class="item item-input">
       <ion-label stacked>Retailer Type</ion-label>
-      <select formControlName="retailerType" placeholder="Select Retailer Type">
-        <option value="1">Vendor</option>
-        <option value="2">Peddler</option>
-      </select>
-    <!-- </div> -->
+      <ion-list radio-group formControlName="retailerType">
+        <ion-item *ngFor="let r of retailerTypes">
+          <ion-label>{{r.type}}</ion-label>
+          <ion-radio value="{{r.tid}}"></ion-radio>
+        </ion-item>
+      </ion-list>
+      <!-- <ion-select formControlName="retailerType" placeholder="Select Retailer Type">Retailer Type
+        <ion-option *ngFor="let r of retailerTypes" value={{r.tid}}>{{r.type}}</ion-option>
+      </ion-select> -->
+    </div>
 
-    
+    <div class="item item-input">
+      <ion-label stacked>Store Type</ion-label>
+      <ion-list radio-group formControlName="storeType">
+        <ion-item *ngFor="let s of storeTypes">
+          <ion-label>{{s.type}}</ion-label>
+          <ion-radio value="{{s.sid}}"></ion-radio>
+        </ion-item>
+      </ion-list>
+      <!-- <ion-select formControlName="storeType" placeholder="Select Store Type">Store Type
+          <ion-option *ngFor="let s of storeTypes" value={{s.sid}}>{{s.type}}</ion-option>
+        </ion-select> -->
+    </div>
+
 
     <div class="item item-input">
       <ion-label stacked>Store Name</ion-label>
@@ -45,7 +62,7 @@
       </ion-input>
     </div>
 
-    <div class="item item-input">
+    <!-- <div class="item item-input">
       <ion-label stacked>Password</ion-label>
       <ion-input formControlName="passwd" type="password" placeholder="What will user's secret?">
       </ion-input>
@@ -67,7 +84,7 @@
       <ion-label stacked>Last Name</ion-label>
       <ion-input formControlName="lname" type="text" placeholder="What is user's lastname?">
       </ion-input>
-    </div>
+    </div> -->
 
     <div class="item item-input">
       <ion-label stacked>Store Photo</ion-label>

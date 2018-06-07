@@ -94,6 +94,40 @@ export class AuthServiceProvider {
     });
   }
 
+  getRetailerTypes() {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+
+      this.http
+        .get(apiCalls.getRetailerTypesAPI, { headers: headers })
+        .subscribe(
+          res => {
+            resolve(res.json());
+          },
+          err => {
+            reject(err);
+          }
+        );
+    });
+  }
+
+  getStoreTypes() {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+
+      this.http
+        .get(apiCalls.getStoreTypesAPI, { headers: headers })
+        .subscribe(
+          res => {
+            resolve(res.json());
+          },
+          err => {
+            reject(err);
+          }
+        );
+    });
+  }
+
   // public getRetailers(): Observable<Retailer[]> {
   //   return this.httpClient
   //     .get(apiCalls.getRetailersAPI)

@@ -5,7 +5,8 @@ import {
   NavParams,
   LoadingController,
   ToastController,
-  Platform
+  Platform,
+  ModalController
 } from "ionic-angular";
 import {
   FileTransfer,
@@ -26,6 +27,9 @@ import { LocationAccuracy } from "@ionic-native/location-accuracy";
 import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
 import { Retailer } from "../../models/Retailer";
 import "rxjs/add/operator/debounceTime";
+import { SelectRetailerPage } from "../select-retailer/select-retailer";
+import { RetailerTypeMaster } from "../../models/RetailerTypeMaster";
+import { StoreTypeMaster } from "../../models/StoreTypeMaster";
 
 @IonicPage()
 @Component({
@@ -41,10 +45,14 @@ export class AddStorePage {
   storeName: any;
   storeLocation: any;
   private retailers: Retailer[] = [];
+  private retailerTypes: RetailerTypeMaster[] = [];
+  private storeTypes: StoreTypeMaster[] = [];
+
   items: any;
   searchTerm: string = "";
   searchControl: FormControl;
   listShow = false;
+  user = { rid: 0, name: "", type: 0 };
 
   constructor(
     public navCtrl: NavController,
@@ -59,11 +67,13 @@ export class AddStorePage {
     public platform: Platform,
     private geolocation: Geolocation,
     private locationAccuracy: LocationAccuracy,
-    private authService: AuthServiceProvider
+    private authService: AuthServiceProvider,
+    public modalCtrl: ModalController
   ) {
     this.createStoreForm = formBuilder.group({
-      retailerName: ["", Validators.required],
+      retailerId: ["", Validators.required],
       retailerType: ["", Validators.required],
+      storeType: ["", Validators.required],
       storeName: ["", Validators.required],
       passwd: ["", Validators.required],
       email: ["", Validators.required],
@@ -78,12 +88,14 @@ export class AddStorePage {
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad AddStorePage");
-    this.getRetailers();
-    this.setFilteredItems();
+    // this.getRetailers();
+    this.getRetailerTypes();
+    this.getStoreTypes();
+    // this.setFilteredItems();
 
-    this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
-      this.setFilteredItems();
-    });
+    // this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
+    //   this.setFilteredItems();
+    // });
 
     if (this.storeName != null) {
       console.log(
@@ -133,6 +145,32 @@ export class AddStorePage {
       console.log(JSON.stringify(this.responseData.body));
       this.retailers = JSON.parse(JSON.stringify(this.responseData.body));
     });
+  }
+
+  getRetailerTypes() {
+    this.authService.getRetailerTypes().then(res => {
+      this.responseData = res;
+      console.log(JSON.stringify(this.responseData.body));
+      this.retailerTypes = JSON.parse(JSON.stringify(this.responseData.body));
+    });
+  }
+
+  getStoreTypes() {
+    this.authService.getStoreTypes().then(res => {
+      console.log(JSON.stringify(res));
+      this.responseData = res;
+      console.log(JSON.stringify(this.responseData.body));
+      this.storeTypes = JSON.parse(JSON.stringify(this.responseData.body));
+    });
+  }
+
+  retailerModal() {
+    let modal = this.modalCtrl.create(SelectRetailerPage);
+    modal.onDidDismiss((user) => {
+      console.log(user);
+      this.user = user;
+    });
+    modal.present();
   }
 
   setFilteredItems() {
@@ -279,9 +317,10 @@ export class AddStorePage {
     // this.presentToast("Creating User ..");
     // console.log(this.createRetailer.value.userType);
     this.authService
-      .addRetailerDeliverer(this.createStoreForm.value)
+      .addStore(this.createStoreForm.value)
       .then(result => {
         console.log(result);
+        this.presentToast(result);
         this.responseData = result;
         // if (this.responseData.status) {
         //   this.createStoreForm.reset();

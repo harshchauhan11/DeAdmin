@@ -26,6 +26,7 @@ import { Camera } from "@ionic-native/camera";
 import { AddStorePage } from "../pages/add-store/add-store";
 import { Geolocation } from '@ionic-native/geolocation';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { SelectRetailerPage } from "../pages/select-retailer/select-retailer";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
     HomePage,
     TabsPage,
     AddRetailerPage,
-    AddStorePage
+    AddStorePage,
+    SelectRetailerPage
   ],
   imports: [BrowserModule, HttpModule, HttpClientModule, IonicModule.forRoot(MyApp)],
   bootstrap: [IonicApp],
@@ -46,7 +48,8 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
     HomePage,
     TabsPage,
     AddRetailerPage,
-    AddStorePage
+    AddStorePage,
+    SelectRetailerPage
   ],
   providers: [
     StatusBar,
