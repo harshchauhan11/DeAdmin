@@ -88,8 +88,8 @@
 
     <div class="item item-input">
       <ion-label stacked>Store Photo</ion-label>
-      <button ion-button small color="deBlue" (click)="getImage()" [disabled]="!createStoreForm.valid">Capture/Browse Photo</button>
-      <button ion-button small color="deBlue" (click)="uploadFile()" [disabled]="!createStoreForm.valid">Upload</button>
+      <button ion-button small color="deBlue" (click)="getImage()">Capture/Browse Photo</button>
+      <button ion-button small color="deBlue" (click)="uploadFile()">Upload</button>
       <br/>
       <img src="{{imageURI}}" *ngIf="imageURI" alt="Ionic File" height="200" />
 
@@ -109,7 +109,7 @@
     </div>
 
     <br/>
-    <button ion-button full color="deBlue" type="submit" [disabled]="!createStoreForm.valid">
+    <button ion-button full color="deBlue" type="submit">
       Add STORE
     </button>
   </form>

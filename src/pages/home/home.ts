@@ -1,25 +1,28 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { AddRetailerPage } from '../add-retailer/add-retailer';
-import { AddStorePage } from '../add-store/add-store';
-import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { Component } from "@angular/core";
+import { NavController } from "ionic-angular";
+import { AddRetailerPage } from "../add-retailer/add-retailer";
+import { AddStorePage } from "../add-store/add-store";
+import { LocationAccuracy } from "@ionic-native/location-accuracy";
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: "page-home",
+  templateUrl: "home.html"
 })
 export class HomePage {
-
-  constructor(public navCtrl: NavController, private locationAccuracy: LocationAccuracy) {
-
+  constructor(
+    public navCtrl: NavController,
+    private locationAccuracy: LocationAccuracy
+  ) {
+    this.enableLocation();
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad Homepage");
-    this.enableLocation();
+    // this.enableLocation();
   }
 
   enableLocation() {
+    // alert("In enableLocation !");
     this.locationAccuracy.canRequest().then((canRequest: boolean) => {
       if (canRequest) {
         // the accuracy option will be ignored by iOS
@@ -41,7 +44,7 @@ export class HomePage {
   }
 
   addStoreForm() {
+    // this.enableLocation();
     this.navCtrl.push(AddStorePage);
   }
-
 }

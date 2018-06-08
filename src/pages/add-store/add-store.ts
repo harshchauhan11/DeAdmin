@@ -75,15 +75,15 @@ export class AddStorePage {
       retailerType: ["", Validators.required],
       storeType: ["", Validators.required],
       storeName: ["", Validators.required],
-      passwd: ["", Validators.required],
-      email: ["", Validators.required],
-      fname: ["", Validators.required],
-      lname: ["", Validators.required],
       storePhoto: ["", Validators.required],
-      latLng: ["", Validators.required],
-      searchControl: [""]
+      latLng: ["", Validators.required]
     });
     this.searchControl = new FormControl();
+  }
+
+  ionViewCanEnter() {
+    console.log("ionViewCanEnter AddStorePage");
+    this.enableLocation();
   }
 
   ionViewDidLoad() {
@@ -112,11 +112,12 @@ export class AddStorePage {
         this.locationAccuracy
           .request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
           .then(
-            () => alert("Request successful"),
-            error =>
-              alert(
+            () => {/*alert("Request successful")*/},
+            error => {
+              /*alert(
                 "Error requesting location permissions" + JSON.stringify(error)
-              )
+              )*/
+            }
           );
       }
     });
@@ -315,7 +316,7 @@ export class AddStorePage {
 
   createStore() {
     // this.presentToast("Creating User ..");
-    // console.log(this.createRetailer.value.userType);
+    alert(JSON.stringify(this.createStoreForm.value));
     this.authService
       .addStore(this.createStoreForm.value)
       .then(result => {
